@@ -8,7 +8,7 @@ go:
 - tip
 script:
 - make ci
-- make release
+- make artifacts/build/release/linux/amd64/docker-pull-ci
 - pv -q -L 175 test/testoutput.txt | artifacts/build/release/linux/amd64/docker-pull-ci
 before_deploy: 
 - make archives
