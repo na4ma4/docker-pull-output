@@ -1,0 +1,144 @@
+testpull: Pulling from koshatul/ci
+25a045fc0afb: Pulling fs layer
+075e4b614bcc: Pulling fs layer
+a925444730e5: Pulling fs layer
+2be0e469840b: Pulling fs layer
+a3ed95caeb02: Pulling fs layer
+b1e21499a991: Pulling fs layer
+8ae5b554c660: Pulling fs layer
+ea7ed0e2a1a9: Pulling fs layer
+1b545b58c477: Pulling fs layer
+c5895faa21f5: Pulling fs layer
+3fd0c984f9e8: Pulling fs layer
+b303462a4663: Pulling fs layer
+35e49bfe77d7: Pulling fs layer
+15dd9bd01c79: Pulling fs layer
+681af2ee160b: Pulling fs layer
+93caed55b6cc: Pulling fs layer
+19d1fc5792bd: Pulling fs layer
+998cca6916ba: Pulling fs layer
+9f112dead73a: Pulling fs layer
+ab71b9770eeb: Pulling fs layer
+429c16ef9562: Pulling fs layer
+b4ed847a0434: Pulling fs layer
+71e20d2ecfd1: Pulling fs layer
+5ad5d63b12d8: Pulling fs layer
+28d75703b18e: Pulling fs layer
+0c2d81787b32: Pulling fs layer
+4057b7801fa1: Pulling fs layer
+8255d32639ec: Pulling fs layer
+788915130454: Pulling fs layer
+5735f53cc134: Pulling fs layer
+d2a1140e503b: Pulling fs layer
+1b545b58c477: Waiting
+c5895faa21f5: Waiting
+3fd0c984f9e8: Waiting
+15dd9bd01c79: Waiting
+35e49bfe77d7: Waiting
+93caed55b6cc: Waiting
+b303462a4663: Waiting
+19d1fc5792bd: Waiting
+998cca6916ba: Waiting
+a3ed95caeb02: Waiting
+9f112dead73a: Waiting
+b1e21499a991: Waiting
+ab71b9770eeb: Waiting
+681af2ee160b: Waiting
+429c16ef9562: Waiting
+b4ed847a0434: Waiting
+71e20d2ecfd1: Waiting
+5ad5d63b12d8: Waiting
+8ae5b554c660: Waiting
+28d75703b18e: Waiting
+0c2d81787b32: Waiting
+ea7ed0e2a1a9: Waiting
+4057b7801fa1: Waiting
+8255d32639ec: Waiting
+788915130454: Waiting
+2be0e469840b: Waiting
+5735f53cc134: Waiting
+d2a1140e503b: Waiting
+25a045fc0afb: Verifying Checksum
+25a045fc0afb: Download complete
+a925444730e5: Verifying Checksum
+a925444730e5: Download complete
+25a045fc0afb: Pull complete
+2be0e469840b: Verifying Checksum
+2be0e469840b: Download complete
+a3ed95caeb02: Download complete
+8ae5b554c660: Verifying Checksum
+8ae5b554c660: Download complete
+ea7ed0e2a1a9: Download complete
+1b545b58c477: Verifying Checksum
+1b545b58c477: Download complete
+075e4b614bcc: Download complete
+3fd0c984f9e8: Verifying Checksum
+3fd0c984f9e8: Download complete
+b303462a4663: Verifying Checksum
+b303462a4663: Download complete
+35e49bfe77d7: Download complete
+15dd9bd01c79: Download complete
+681af2ee160b: Download complete
+93caed55b6cc: Verifying Checksum
+93caed55b6cc: Download complete
+b1e21499a991: Download complete
+19d1fc5792bd: Verifying Checksum
+19d1fc5792bd: Download complete
+9f112dead73a: Download complete
+998cca6916ba: Verifying Checksum
+998cca6916ba: Download complete
+ab71b9770eeb: Verifying Checksum
+ab71b9770eeb: Download complete
+c5895faa21f5: Download complete
+71e20d2ecfd1: Download complete
+5ad5d63b12d8: Verifying Checksum
+5ad5d63b12d8: Download complete
+28d75703b18e: Verifying Checksum
+28d75703b18e: Download complete
+0c2d81787b32: Verifying Checksum
+0c2d81787b32: Download complete
+4057b7801fa1: Verifying Checksum
+4057b7801fa1: Download complete
+8255d32639ec: Verifying Checksum
+8255d32639ec: Download complete
+788915130454: Verifying Checksum
+788915130454: Download complete
+5735f53cc134: Download complete
+d2a1140e503b: Verifying Checksum
+d2a1140e503b: Download complete
+075e4b614bcc: Pull complete
+a925444730e5: Pull complete
+2be0e469840b: Pull complete
+a3ed95caeb02: Pull complete
+b1e21499a991: Pull complete
+8ae5b554c660: Pull complete
+ea7ed0e2a1a9: Pull complete
+1b545b58c477: Pull complete
+c5895faa21f5: Pull complete
+3fd0c984f9e8: Pull complete
+b303462a4663: Pull complete
+35e49bfe77d7: Pull complete
+15dd9bd01c79: Pull complete
+681af2ee160b: Pull complete
+93caed55b6cc: Pull complete
+19d1fc5792bd: Pull complete
+998cca6916ba: Pull complete
+9f112dead73a: Pull complete
+b4ed847a0434: Verifying Checksum
+b4ed847a0434: Download complete
+ab71b9770eeb: Pull complete
+429c16ef9562: Verifying Checksum
+429c16ef9562: Download complete
+429c16ef9562: Pull complete
+b4ed847a0434: Pull complete
+71e20d2ecfd1: Pull complete
+5ad5d63b12d8: Pull complete
+28d75703b18e: Pull complete
+0c2d81787b32: Pull complete
+4057b7801fa1: Pull complete
+8255d32639ec: Pull complete
+788915130454: Pull complete
+5735f53cc134: Pull complete
+d2a1140e503b: Pull complete
+Digest: sha256:5730163cb429132ec1def05d8a42aed8c2faf03354a6c38f699322f85ed4b6bc
+Status: Downloaded newer image for koshatul/ci:testpull

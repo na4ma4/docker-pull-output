@@ -1,0 +1,31 @@
+language: go
+addons:
+  apt:
+    packages:
+    - pv
+go:
+- '1.9'
+- tip
+script:
+- make ci
+- make release
+- pv -q -L 175 test/testoutput.txt | artifacts/build/release/linux/amd64/docker-pull-ci
+before_deploy: 
+- make archives
+matrix:
+  fast_finish: true
+  allow_failures:
+  - go: tip
+deploy:
+  provider: releases
+  skip_cleanup: true
+  file:
+  - artifacts/archives/docker-pull-output-darwin-amd64.tar.gz
+  - artifacts/archives/docker-pull-output-linux-amd64.tar.gz
+  - artifacts/archives/docker-pull-output-windows-amd64.zip
+  - artifacts/archives/docker-pull-output-darwin-386.tar.gz
+  - artifacts/archives/docker-pull-output-linux-386.tar.gz
+  - artifacts/archives/docker-pull-output-windows-386.zip
+  go: '1.9'
+  on:
+    tags: true
