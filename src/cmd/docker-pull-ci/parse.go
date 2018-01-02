@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"os"
 	"strings"
 	"time"
@@ -90,7 +89,7 @@ func modifyProcessingStats() {
 			addLayer(chg.LayerName)
 			removeLayerInprogress(chg.LayerName)
 		}
-
+		printStats()
 	}
 }
 
@@ -122,11 +121,11 @@ func parseCommand(context *cli.Context) error {
 	logrus.Debug("parseCommand():start")
 
 	go modifyProcessingStats()
-	go sendPrintStats()
+	// go sendPrintStats()
 
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		fmt.Println(scanner.Text())
+		// fmt.Println(scanner.Text())
 		line := strings.SplitN(scanner.Text(), ": ", 2)
 		if len(line) == 2 {
 			chg := StatusChange{
