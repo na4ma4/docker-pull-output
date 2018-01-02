@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"os"
 	"strings"
-	"time"
 
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
@@ -106,26 +105,14 @@ func printStats() {
 	)
 }
 
-func sendPrintStats() {
-	for {
-		chg := StatusChange{
-			Status: "PRINT",
-		}
-		processingQueue <- chg
-		time.Sleep(5 * time.Second)
-	}
-}
-
 func parseCommand(context *cli.Context) error {
 	beforeAction()
 	logrus.Debug("parseCommand():start")
 
 	go modifyProcessingStats()
-	// go sendPrintStats()
 
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		// fmt.Println(scanner.Text())
 		line := strings.SplitN(scanner.Text(), ": ", 2)
 		if len(line) == 2 {
 			chg := StatusChange{
