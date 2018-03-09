@@ -11,13 +11,20 @@ import (
 
 // ProcessingStats contains all the statistics of the running layers
 type ProcessingStats struct {
-	Last              StatusChange
+	Last StatusChange
+	// Common
+	AlreadyExists []string
+	// Pull
 	PullingFSLayer    []string
 	VerifyingChecksum []string
 	DownloadComplete  []string
 	PullComplete      []string
 	LayerInprogress   []string
 	LayerList         []string
+	// Push
+	Preparing []string
+	Waiting   []string
+	Pushed    []string
 }
 
 // StatusChange is a change request against the current processing stats
@@ -26,6 +33,17 @@ type StatusChange struct {
 	Status    string
 }
 
+// OutputType is an enum of Docker Output Processing Types
+type OutputType int
+
+const (
+	// DockerPull is the "docker pull" output processing type
+	DockerPull OutputType = iota
+	// DockerPush is the "docker push" output processing type
+	DockerPush
+)
+
+var outputType = DockerPull
 var stats = ProcessingStats{}
 var processingQueue = make(chan StatusChange, 20)
 
@@ -74,6 +92,22 @@ func modifyProcessingStats() {
 		switch chg.Status {
 		case "PRINT":
 			printStats()
+		// Push
+		case "Preparing":
+			stats.Preparing = append(stats.Preparing, chg.LayerName)
+			addLayerInprogress(chg.LayerName)
+		case "Waiting":
+			stats.Waiting = append(stats.Waiting, chg.LayerName)
+			addLayer(chg.LayerName)
+		case "Pushed":
+			stats.Pushed = append(stats.Pushed, chg.LayerName)
+			addLayer(chg.LayerName)
+			removeLayerInprogress(chg.LayerName)
+		case "Layer already exists":
+			stats.AlreadyExists = append(stats.AlreadyExists, chg.LayerName)
+			addLayer(chg.LayerName)
+			removeLayerInprogress(chg.LayerName)
+		// Pull
 		case "Pulling fs layer":
 			stats.PullingFSLayer = append(stats.PullingFSLayer, chg.LayerName)
 			addLayerInprogress(chg.LayerName)
@@ -87,22 +121,41 @@ func modifyProcessingStats() {
 			stats.PullComplete = append(stats.PullComplete, chg.LayerName)
 			addLayer(chg.LayerName)
 			removeLayerInprogress(chg.LayerName)
+		// Common
+		case "Already Exists":
+			stats.AlreadyExists = append(stats.AlreadyExists, chg.LayerName)
+			addLayer(chg.LayerName)
+			removeLayerInprogress(chg.LayerName)
 		}
 		printStats()
 	}
 }
 
 func printStats() {
-	logrus.Infof(
-		"Last:[%s: %s]; Pulling FS Layer:%d; Verifying Complete:%d; Download Complete:%d; Pull Complete:%d; InProgress:%d; Total:%d",
-		stats.Last.LayerName, stats.Last.Status,
-		len(stats.PullingFSLayer),
-		len(stats.VerifyingChecksum),
-		len(stats.DownloadComplete),
-		len(stats.PullComplete),
-		len(stats.LayerInprogress),
-		len(stats.LayerList),
-	)
+	switch outputType {
+	case DockerPull:
+		logrus.Infof(
+			"Last:[%s: %s]; Pulling FS Layer:%d; Verifying Complete:%d; Download Complete:%d; Pull Complete:%d; InProgress:%d; Total:%d",
+			stats.Last.LayerName, stats.Last.Status,
+			len(stats.PullingFSLayer),
+			len(stats.VerifyingChecksum),
+			len(stats.DownloadComplete),
+			len(stats.PullComplete),
+			len(stats.LayerInprogress),
+			len(stats.LayerList),
+		)
+	case DockerPush:
+		logrus.Infof(
+			"Last:[%s: %s]; Preparing:%d; Waiting:%d; Already Exists:%d; Pushed:%d; InProgress:%d; Total:%d",
+			stats.Last.LayerName, stats.Last.Status,
+			len(stats.Preparing),
+			len(stats.Waiting),
+			len(stats.AlreadyExists),
+			len(stats.Pushed),
+			len(stats.LayerInprogress),
+			len(stats.LayerList),
+		)
+	}
 }
 
 func parseCommand(context *cli.Context) error {
@@ -113,13 +166,17 @@ func parseCommand(context *cli.Context) error {
 
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		line := strings.SplitN(scanner.Text(), ": ", 2)
-		if len(line) == 2 {
+		// line := scanner.Text()
+		lineSplit := strings.SplitN(scanner.Text(), ": ", 2)
+		if len(lineSplit) == 2 {
 			chg := StatusChange{
-				LayerName: line[0],
-				Status:    line[1],
+				LayerName: lineSplit[0],
+				Status:    lineSplit[1],
 			}
 			processingQueue <- chg
+		}
+		if strings.HasPrefix(scanner.Text(), "The push") {
+			outputType = DockerPush
 		}
 	}
 
