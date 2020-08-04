@@ -4,12 +4,11 @@ addons:
     packages:
     - pv
 go:
-- '1.9'
+- '1.14'
 - tip
 script:
 - make ci
-- make artifacts/build/release/linux/amd64/docker-pull-ci
-- pv -q -L 175 test/testoutput.txt | artifacts/build/release/linux/amd64/docker-pull-ci
+- pv -q -L 175 test/testoutput.txt | make run
 before_deploy: 
 - make archives
 matrix:
@@ -18,16 +17,11 @@ matrix:
   - go: tip
 deploy:
   provider: releases
-  skip_cleanup: true
   api_key:
     secure: KAqC9I/FF93eA5Sthfk5W6ju3YZBx0aSUkf2UcAImrR4prFRLKr8d9q+x/MNkbDet5OyYazlUElrjoSfO8yTn6J+mLu3bvvmRSInZx/8mQ4D3Vd+Snl+dpMe/zgoeu8HcTsEF9bo+nvCMsIMdQeW0WbzbrLvs/WIRC9d4J+japymQlyU/Vf1dj7NUD6P5lA6Xiz8ucgMH3RYCsXBpahQxnSnQRXOXyjpkpSWLVUHuc8lnmmrbKELrHdFW1O7pPON7YPQDumGwv+64deRKf42aki7G5tdKhTof01P4ut4JaZIeeFFX3N8QGX4MyL3+crtljPp6iVOn1l1XO3gfavAN62ULoqL72F4F98wkZbnG3bVV9YYwNLEYbIo80bH+/LgGkd3mT9uzTDIIn87szlVDPcWfTs0FbZ7KedMc/mjb4xIYf4KynKDnkWxBAInRmPIeZXZ8I33wYYXM4gqwJ0TF/qbPSsRPnq4QkD5raj0RjI2iwoZ/cZu3dGQ0h1ClKIKeyAsMpGR4HINV4bvICrj12gWB62ekkFy0m1YGif74X2lyAVpdIxm8LcDrjwXSwwmhHY4zgJxBwPPIMIo6lo4FjX6JvC1t8C6/Ii0HxZsA3KUtVZoTxon68yZM1IOrPxjYvrbOV1dWsbUkLYy2u0X9lc5I9d921XifXWM8ucdpts=
-  file:
-  - artifacts/archives/docker-pull-output-darwin-amd64.tar.gz
-  - artifacts/archives/docker-pull-output-linux-amd64.tar.gz
-  - artifacts/archives/docker-pull-output-windows-amd64.zip
-  - artifacts/archives/docker-pull-output-darwin-386.tar.gz
-  - artifacts/archives/docker-pull-output-linux-386.tar.gz
-  - artifacts/archives/docker-pull-output-windows-386.zip
-  go: '1.9'
+  skip_cleanup: true
+  file_glob: true
+  file: artifacts/archives/*
+  go: '1.14'
   on:
     tags: true

@@ -1,4 +1,0 @@
-package: github.com/koshatul/docker-pull-output
-import:
-- package: github.com/sirupsen/logrus
-- package: github.com/urfave/cli
