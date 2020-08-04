@@ -45,14 +45,14 @@ func parseCommand(cmd *cobra.Command, args []string) {
 		}
 	}
 
-	stats.Print()
-
 	if scanner.Err() != nil {
 		logrus.Panic(scanner.Err())
 	}
 
 	close(processingQueue)
 	wg.Wait()
+
+	// stats.Print()
 
 	logrus.Debug("parseCommand():end")
 }

@@ -131,39 +131,47 @@ func (p *ProcessingStats) Run(ctx context.Context, processingQueue chan StatusCh
 		case "Preparing":
 			p.appendWithLock(&p.Preparing, chg)
 			p.addLayerInprogress(chg.LayerName)
+			p.Print()
 		case "Waiting":
 			p.appendWithLock(&p.Waiting, chg)
 			p.addLayer(chg.LayerName)
+			p.Print()
 		case "Pushed":
 			p.appendWithLock(&p.Pushed, chg)
 			p.addLayer(chg.LayerName)
 			p.removeLayerInprogress(chg.LayerName)
+			p.Print()
 		case "Layer already exists":
 			p.appendWithLock(&p.AlreadyExists, chg)
 			p.addLayer(chg.LayerName)
 			p.removeLayerInprogress(chg.LayerName)
-		// Pull
+			p.Print()
+			// Pull
 		case "Pulling fs layer":
 			p.appendWithLock(&p.PullingFSLayer, chg)
 			p.addLayerInprogress(chg.LayerName)
+			p.Print()
 		case "Verifying Checksum":
 			p.appendWithLock(&p.VerifyingChecksum, chg)
 			p.addLayer(chg.LayerName)
+			p.Print()
 		case "Download complete":
 			p.appendWithLock(&p.DownloadComplete, chg)
 			p.addLayer(chg.LayerName)
+			p.Print()
 		case "Pull complete":
 			p.appendWithLock(&p.PullComplete, chg)
 			p.addLayer(chg.LayerName)
 			p.removeLayerInprogress(chg.LayerName)
-		// Common
+			p.Print()
+			// Common
 		case "Already Exists":
 			p.appendWithLock(&p.AlreadyExists, chg)
 			p.addLayer(chg.LayerName)
 			p.removeLayerInprogress(chg.LayerName)
+			p.Print()
 		}
 
-		p.Print()
 	}
 }
 

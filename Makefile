@@ -34,6 +34,13 @@ artifacts/upx/%.upx: artifacts/build/%
 	-$(RM) -f "$(@)"
 	upx -o "$@" "$<"
 
+test:: artifacts/test/testoutput.log
+
+.DELETE_ON_ERROR: artifacts/test/testoutput.log
+artifacts/test/testoutput.log: artifacts/build/debug/$(GOHOSTOS)/$(GOHOSTARCH)/docker-pull-ci test/testoutput.txt
+	-@mkdir -p "$(@D)"
+	cat "test/testoutput.txt" | "$(<)" 2>&1 | sed -e 's/.* level=//' | tee "$(@)" > /dev/null
+	diff "$(@)" "test/testoutput.txt.run" > /dev/null
 
 ######################
 # Linting
