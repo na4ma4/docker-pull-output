@@ -1,5 +1,13 @@
 name: unit-test
-on: [push,pull_request]
+
+on:
+  push:
+    tags:
+      - v*
+    branches:
+      - master
+      - gh-actions
+  pull_request:
 
 jobs:
   unit-test:
