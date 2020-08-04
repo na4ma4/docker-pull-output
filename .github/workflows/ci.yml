@@ -60,7 +60,7 @@ jobs:
   release:
     name: release
     runs-on: ubuntu-latest
-    if: ( success() && startsWith(github.ref, "ref/head/v")
+    if: ( success() && startsWith(github.ref, "ref/head/v") )
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
