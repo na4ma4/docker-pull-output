@@ -52,10 +52,19 @@ jobs:
       - name: make ci
         run: make ci
 
+  env:
+    name: env
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_REF: ${{ github.ref }}
+        run: echo "$GITHUB_REF"
+
   release:
     name: release
     runs-on: ubuntu-latest
-    if: ( success() && startsWith(github.ref, 'ref/head/v') )
+    if: startsWith(github.ref, 'ref/head/v')
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
