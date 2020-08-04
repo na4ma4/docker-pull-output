@@ -5,6 +5,8 @@ on:
     branches:
       - master
       - gh-actions
+    tags:
+      - 'v*'
   pull_request:
 
 jobs:
