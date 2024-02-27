@@ -1,12 +1,12 @@
-GO_MATRIX += darwin/amd64 darwin/arm64
-GO_MATRIX += linux/amd64 linux/arm64
-GO_MATRIX += windows/amd64
+GO_MATRIX ?= darwin/amd64 darwin/arm64 \
+  linux/amd64 linux/arm64 \
+  windows/amd64
 
 APP_DATE ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 GIT_HASH ?= $(shell git show -s --format=%h)
 
-GO_DEBUG_ARGS   ?= -v -ldflags "-X main.version=$(GO_APP_VERSION)+debug -X main.gitHash=$(GIT_HASH) -X main.buildDate=$(APP_DATE)"
-GO_RELEASE_ARGS ?= -v -ldflags "-X main.version=$(GO_APP_VERSION) -X main.gitHash=$(GIT_HASH) -X main.buildDate=$(APP_DATE) -s -w"
+GO_DEBUG_ARGS   ?= -v -ldflags "-X main.version=$(GO_APP_VERSION)+debug -X main.commit=$(GIT_HASH) -X main.date=$(APP_DATE) -X main.builtBy=makefiles"
+GO_RELEASE_ARGS ?= -v -ldflags "-X main.version=$(GO_APP_VERSION) -X main.commit=$(GIT_HASH) -X main.date=$(APP_DATE) -X main.builtBy=makefiles -s -w"
 
 _GO_GTE_1_14 := $(shell expr `go version | cut -d' ' -f 3 | tr -d 'a-z' | cut -d'.' -f2` \>= 14)
 ifeq "$(_GO_GTE_1_14)" "1"

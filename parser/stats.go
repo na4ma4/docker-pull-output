@@ -117,7 +117,7 @@ func (p *ProcessingStats) appendWithLock(field *[]string, chg StatusChange) {
 }
 
 // Run processes the queue until there are no messages left.
-func (p *ProcessingStats) Run(ctx context.Context, processingQueue chan StatusChange) {
+func (p *ProcessingStats) Run(_ context.Context, processingQueue chan StatusChange) {
 	for chg := range processingQueue {
 		if chg.LayerName != "" {
 			p.Last = chg

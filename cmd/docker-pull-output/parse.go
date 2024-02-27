@@ -17,7 +17,7 @@ const (
 	processingLineSplit   = 2
 )
 
-func parseCommand(cmd *cobra.Command, args []string) {
+func parseCommand(_ *cobra.Command, _ []string) {
 	logrus.Debug("parseCommand():start")
 
 	ctx, cancel := context.WithCancel(context.Background())
