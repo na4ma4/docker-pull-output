@@ -1,6 +1,8 @@
 module github.com/na4ma4/docker-pull-output
 
-go 1.20
+go 1.22.0
+
+toolchain go1.22.3
 
 require (
 	github.com/sirupsen/logrus v1.9.3
