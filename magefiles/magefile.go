@@ -47,7 +47,6 @@ func TestRun(ctx context.Context) {
 	loga.PrintCommandAlways("%s", cmdTemplate.OutputArtifact)
 	cmd := exec.CommandContext(ctx, cmdTemplate.OutputArtifact)
 
-	testInput := bytes.NewBuffer(nil)
 	{
 		testInputFile := paths.MustGetGitTopLevel("testdata", "testoutput.txt")
 		f, err := os.Open(testInputFile)
@@ -56,18 +55,20 @@ func TestRun(ctx context.Context) {
 		}
 		defer f.Close()
 
-		go func() {
-			_, err := io.Copy(testInput, f)
-			if err != nil {
-				mg.Fatalf(1, "unable to copy from test input file to stdin: %s", err)
-			}
-		}()
+		cmd.Stdin = f
+
+		// go func() {
+		// 	_, err := io.Copy(testInput, f)
+		// 	if err != nil {
+		// 		mg.Fatalf(1, "unable to copy from test input file to stdin: %s", err)
+		// 	}
+		// 	testInput.Close()
+		// }()
 	}
 
 	testOutput := bytes.NewBuffer(nil)
 	testError := bytes.NewBuffer(nil)
 
-	cmd.Stdin = testInput
 	cmd.Stdout = testOutput
 	cmd.Stderr = testError
 
