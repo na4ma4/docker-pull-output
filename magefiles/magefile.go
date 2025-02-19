@@ -30,7 +30,7 @@ func TestLocal(ctx context.Context) {
 
 var Default = TestLocal
 
-func TestRun(ctx context.Context) {
+func TestRun(ctx context.Context) error {
 	ctx, cancel := context.WithTimeout(ctx, time.Second)
 	defer cancel()
 
@@ -39,7 +39,7 @@ func TestRun(ctx context.Context) {
 	commandPaths := paths.MustCommandPaths()
 
 	if len(commandPaths) != 1 {
-		mg.Fatal(1, "unable to get command path for docker-pull-output")
+		return mg.Fatal(1, "unable to get command path for docker-pull-output")
 	}
 
 	cmdTemplate := helper.NewCommandTemplate(true, commandPaths[0])
@@ -47,36 +47,29 @@ func TestRun(ctx context.Context) {
 	loga.PrintCommandAlways("%s", cmdTemplate.OutputArtifact)
 	cmd := exec.CommandContext(ctx, cmdTemplate.OutputArtifact)
 
-	testInput := bytes.NewBuffer(nil)
 	{
 		testInputFile := paths.MustGetGitTopLevel("testdata", "testoutput.txt")
 		f, err := os.Open(testInputFile)
 		if err != nil {
-			mg.Fatalf(1, "unable to read test docker pull output (%s): %s", testInputFile, err)
+			return mg.Fatalf(1, "unable to read test docker pull output (%s): %s", testInputFile, err)
 		}
 		defer f.Close()
 
-		go func() {
-			_, err := io.Copy(testInput, f)
-			if err != nil {
-				mg.Fatalf(1, "unable to copy from test input file to stdin: %s", err)
-			}
-		}()
+		cmd.Stdin = f
 	}
 
 	testOutput := bytes.NewBuffer(nil)
 	testError := bytes.NewBuffer(nil)
 
-	cmd.Stdin = testInput
 	cmd.Stdout = testOutput
 	cmd.Stderr = testError
 
 	if err := cmd.Run(); err != nil {
-		mg.Fatalf(1, "unable to execute docker pull output test (%s): %s", commandPaths[0], err)
+		return mg.Fatalf(1, "unable to execute docker pull output test (%s): %s", commandPaths[0], err)
 	}
 
 	if testOutput.Len() > 0 {
-		mg.Fatalf(1, "stdout output produced (only output should be on stderr): %s", testOutput.Bytes())
+		return mg.Fatalf(1, "stdout output produced (only output should be on stderr): %s", testOutput.Bytes())
 	}
 
 	output := filterOutput(testError.Bytes())
@@ -89,13 +82,13 @@ func TestRun(ctx context.Context) {
 			var err error
 			f, err = os.Open(testExpectedFile)
 			if err != nil {
-				mg.Fatalf(1, "unable to read expected docker pull output file (%s): %s", testExpectedFile, err)
+				return mg.Fatalf(1, "unable to read expected docker pull output file (%s): %s", testExpectedFile, err)
 			}
 		}
 
 		data, err := io.ReadAll(f)
 		if err != nil {
-			mg.Fatalf(1, "unable to read lines from expected docker pull output file: %s", err)
+			return mg.Fatalf(1, "unable to read lines from expected docker pull output file: %s", err)
 		}
 
 		expect = filterOutput(data)
@@ -103,8 +96,10 @@ func TestRun(ctx context.Context) {
 
 	if diff := cmp.Diff(output, expect); diff != "" {
 		loga.PrintWarning("docker-pull-output: -got +want:\n%s", diff)
-		mg.Fatalf(1, "docker-pull-output: -got +want:\n%s", diff)
+		return mg.Fatalf(1, "docker-pull-output: -got +want:\n%s", diff)
 	}
+
+	return nil
 }
 
 func filterOutput(in []byte) []string {
