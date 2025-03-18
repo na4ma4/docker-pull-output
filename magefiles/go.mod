@@ -1,8 +1,6 @@
 module github.com/na4ma4/docker-pull-output/magefiles
 
-go 1.23.0
-
-toolchain go1.24.0
+go 1.24.0
 
 require (
 	github.com/dosquad/mage v0.2.5

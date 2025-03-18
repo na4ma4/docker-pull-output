@@ -22,6 +22,10 @@ import (
 	"github.com/dosquad/mage/loga"
 )
 
+const (
+	testRunTimeout = 15 * time.Second
+)
+
 // TestLocal update, protoc, format, tidy, lint & test.
 func TestLocal(ctx context.Context) {
 	mg.CtxDeps(ctx, mage.Test)
@@ -31,7 +35,7 @@ func TestLocal(ctx context.Context) {
 var Default = TestLocal
 
 func TestRun(ctx context.Context) error {
-	ctx, cancel := context.WithTimeout(ctx, time.Second)
+	ctx, cancel := context.WithTimeout(ctx, testRunTimeout)
 	defer cancel()
 
 	mage.Build.DebugCommand(mage.Build{}, ctx, "docker-pull-output")
