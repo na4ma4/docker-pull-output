@@ -47,7 +47,7 @@ nfpms:
   -
     id: docker-pull-output-nfpms
     package_name: docker-pull-output
-    builds:
+    ids:
       - docker-pull-output
     homepage: https://github.com/na4ma4/docker-pull-output
     maintainer: na4ma4 <na4ma4@users.noreply.github.com>
