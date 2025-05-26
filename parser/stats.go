@@ -184,7 +184,8 @@ func (p *ProcessingStats) Print() {
 	switch p.Format {
 	case DockerPull:
 		logrus.Infof(
-			"Last:[%s: %s]; Pulling FS Layer:%d; Verifying Complete:%d; Download Complete:%d; Pull Complete:%d; InProgress:%d; Total:%d",
+			"Last:[%s: %s]; Pulling FS Layer:%d; Verifying Complete:%d; "+
+				"Download Complete:%d; Pull Complete:%d; InProgress:%d; Total:%d",
 			p.Last.LayerName, p.Last.Status,
 			len(p.PullingFSLayer),
 			len(p.VerifyingChecksum),
@@ -195,7 +196,8 @@ func (p *ProcessingStats) Print() {
 		)
 	case DockerPush:
 		logrus.Infof(
-			"Last:[%s: %s]; Preparing:%d; Waiting:%d; Already Exists:%d; Pushed:%d; InProgress:%d; Total:%d",
+			"Last:[%s: %s]; Preparing:%d; Waiting:%d; Already Exists:%d; "+
+				"Pushed:%d; InProgress:%d; Total:%d",
 			p.Last.LayerName, p.Last.Status,
 			len(p.Preparing),
 			len(p.Waiting),
