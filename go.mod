@@ -1,9 +1,9 @@
 module github.com/na4ma4/docker-pull-output
 
-go 1.24.0
+go 1.24.1
 
 require (
-	github.com/dosquad/go-cliversion v0.2.1
+	github.com/dosquad/go-cliversion v0.3.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.9.1
 	golang.org/x/net v0.42.0
