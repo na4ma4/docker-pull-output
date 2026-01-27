@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"os"
 	"strings"
 	"sync"
@@ -9,7 +10,6 @@ import (
 	"github.com/na4ma4/docker-pull-output/parser"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	"golang.org/x/net/context"
 )
 
 const (
