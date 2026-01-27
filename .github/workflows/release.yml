@@ -2,12 +2,21 @@ name: "Release"
 
 on:
   push:
-    tags:
-    - '*'
+    branches:
+      - main
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
 
 jobs:
-  goreleaser:
-    name: "Goreleaser"
-    uses: na4ma4/actions/.github/workflows/goreleaser.yml@main
+  release-please:
+    name: "Release Please"
+    uses: na4ma4/actions/.github/workflows/release-please.yml@main
+    with:
+      artifacts: true
+      platforms: "linux/amd64,linux/arm64,darwin/arm64,windows/amd64"
+      homebrew-repo: "na4ma4/homebrew-tap"
     secrets:
-      GO_RELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      RELEASE_PLEASE_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
