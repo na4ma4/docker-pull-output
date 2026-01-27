@@ -48,7 +48,7 @@ func TestRun(ctx context.Context) error {
 
 	cmdTemplate := helper.NewCommandTemplate(true, commandPaths[0])
 
-	loga.PrintCommandAlways("%s", cmdTemplate.OutputArtifact)
+	loga.PrintCommandAlwaysf("%s", cmdTemplate.OutputArtifact)
 	cmd := exec.CommandContext(ctx, cmdTemplate.OutputArtifact)
 
 	{
@@ -99,7 +99,7 @@ func TestRun(ctx context.Context) error {
 	}
 
 	if diff := cmp.Diff(output, expect); diff != "" {
-		loga.PrintWarning("docker-pull-output: -got +want:\n%s", diff)
+		loga.PrintWarningf("docker-pull-output: -got +want:\n%s", diff)
 		return mg.Fatalf(1, "docker-pull-output: -got +want:\n%s", diff)
 	}
 
