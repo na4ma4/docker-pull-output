@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0](https://github.com/na4ma4/docker-pull-output/compare/v1.0.0...v1.0.0) (2026-01-27)
+
+
+### Bug Fixes
+
+* added homebrew cask generator ([c383b14](https://github.com/na4ma4/docker-pull-output/commit/c383b14f7087464596321b1aab6d50dff9f779ab))
+
 ## 1.0.0 (2026-01-27)
 
 
