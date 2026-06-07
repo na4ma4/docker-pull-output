@@ -7,9 +7,10 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/na4ma4/docker-pull-output/parser"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+
+	"github.com/na4ma4/docker-pull-output/parser"
 )
 
 const (
