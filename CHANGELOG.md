@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0](https://github.com/na4ma4/docker-pull-output/compare/v1.0.0...v1.0.0) (2026-06-07)
+
+
+### Bug Fixes
+
+* update golangci-lint configuration and import context package ([0c0eb83](https://github.com/na4ma4/docker-pull-output/commit/0c0eb836b77a294c9c6dc85ea7b0586a5aaef377))
+
 ## [1.0.0](https://github.com/na4ma4/docker-pull-output/compare/v1.0.0...v1.0.0) (2026-01-27)
 
 
