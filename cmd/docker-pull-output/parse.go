@@ -30,10 +30,10 @@ func parseCommand(_ *cobra.Command, _ []string) {
 
 	wg.Add(1)
 
-	go func() {
+	wg.Go(func() {
 		stats.Run(ctx, processingQueue)
 		wg.Done()
-	}()
+	})
 
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
