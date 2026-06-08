@@ -21,3 +21,11 @@ jobs:
       homebrew-repo: "na4ma4/homebrew-tap"
     secrets:
       RELEASE_PLEASE_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+
+  goreleaser:
+    name: "GoReleaser"
+    if: needs.release-please.outputs.release_created
+    needs: release-please
+    uses: na4ma4/actions/.github/workflows/goreleaser.yml@main
+    secrets:
+      GO_RELEASER_GITHUB_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
