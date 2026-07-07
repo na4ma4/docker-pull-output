@@ -55,7 +55,7 @@ func NewProcessingStats() *ProcessingStats {
 // Verifying Checksum
 // Download complete
 // Pull complete
-// test-container: Pulling from koshatul/ci
+// test-container: Pulling from na4ma4/ci
 
 func (p *ProcessingStats) addLayerInprogress(layer string) {
 	p.addLayer(layer)

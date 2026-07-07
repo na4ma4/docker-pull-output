@@ -12,3 +12,51 @@ jobs:
     name: "Unit Test"
     uses: na4ma4/actions/.github/workflows/unit-test.yml@main
     secrets: inherit
+
+  latest-test:
+    needs: unit-test
+    name: "Test Against Latest Docker CLI"
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Checkout
+      uses: actions/checkout@v7
+
+    - name: Update Docker CLI
+      run: |
+        mkdir -p artifacts/logs
+        curl -fsSL https://get.docker.com | sh
+        docker --version | tee artifacts/logs/docker-version.log
+
+    - name: Set up Go
+      if: ${{ hashFiles('go.mod') != '' }}
+      uses: actions/setup-go@v6
+      with:
+        go-version-file: 'go.mod'
+        cache: true
+      id: go
+
+    - name: Run Mage Build
+      uses: magefile/mage-action@v4
+      with:
+        version: latest
+        args: build:debug
+
+    - name: Test against latest docker cli
+      run: |
+        PATH="${PATH}:$(pwd)/artifacts/build/debug/$(go env GOOS)/$(go env GOARCH)"
+        docker pull ubuntu:jammy | docker-pull-output 2>&1 | tee artifacts/logs/output.log
+
+    - name: Check Test Output
+      run: |
+        EXITCODE=0
+        if grep -v " level=info " artifacts/logs/output.log; then 
+          echo "error: test output contains non-INFO lines. See artifacts/logs/output.log for details."
+          EXITCODE=1
+        fi
+        exit ${EXITCODE}
+    - name: Upload Test Output
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: docker-pull-output
+        path: artifacts/logs/*
