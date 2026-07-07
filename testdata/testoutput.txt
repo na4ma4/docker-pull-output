@@ -1,4 +1,4 @@
-testpull: Pulling from koshatul/ci
+testpull: Pulling from na4ma4/ci
 25a045fc0afb: Pulling fs layer
 075e4b614bcc: Pulling fs layer
 a925444730e5: Pulling fs layer
@@ -141,4 +141,4 @@ b4ed847a0434: Pull complete
 5735f53cc134: Pull complete
 d2a1140e503b: Pull complete
 Digest: sha256:5730163cb429132ec1def05d8a42aed8c2faf03354a6c38f699322f85ed4b6bc
-Status: Downloaded newer image for koshatul/ci:testpull
+Status: Downloaded newer image for na4ma4/ci:testpull
