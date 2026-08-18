@@ -7,7 +7,7 @@ require (
 	github.com/dosquad/mage v0.5.1
 	github.com/google/go-cmp v0.7.0
 	github.com/magefile/mage v1.17.2
-	github.com/sirupsen/logrus v1.9.4
+	github.com/sirupsen/logrus v1.10.0
 	github.com/spf13/cobra v1.10.2
 )
 
