@@ -1,9 +1,9 @@
 module github.com/na4ma4/docker-pull-output
 
-go 1.25.0
+go 1.26.0
 
 require (
-	github.com/dosquad/go-cliversion v0.3.0
+	github.com/dosquad/go-cliversion v1.0.0
 	github.com/dosquad/mage v0.5.1
 	github.com/google/go-cmp v0.7.0
 	github.com/magefile/mage v1.17.2
@@ -30,6 +30,5 @@ require (
 	golang.org/x/net v0.56.0 // indirect
 	golang.org/x/sys v0.46.0 // indirect
 	golang.org/x/text v0.40.0 // indirect
-	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
